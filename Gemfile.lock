@@ -145,7 +145,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bcrypt (~> 3.1)
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
   jwt (~> 2.1)

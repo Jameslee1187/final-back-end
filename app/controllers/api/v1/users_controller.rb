@@ -1,26 +1,30 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_api_v1_user, only: [:show, :update, :destroy]
-  skip_before_action :authorized, only: [:signup, :login]
+  skip_before_action :authorized, only: [:create, :login, :index]
 
-  def signup
+  def create
     username = params[:username]
     password = params[:password]
     user = Api::V1::User.create(username: username, password: password)
       if user.valid?
         token = encode_token({user_id: user.id})
-        render json: {token: token, result: "Great Success"}
+        render json: {jwt: token, user: user, result: "Great Success"}
       else
         render json: {result: "Failure"}
       end
   end
+  # $2a$10$BDF.9FxvY8uyqexy.bGh7eTD0BHniiVI0WbZIMclZrfBntettu1nu
 
   def login
     username = params[:username]
     password = params[:password]
-    user = Api::V1::User.where(username: username, password: password)
-    if user.valid?
+    user = Api::V1::User.find_by(username: username)
+    puts user.authenticate(password)
+    puts password
+    puts user
+    if user && user.authenticate(password)
       token = encode_token({user_id: user.id})
-      render json: {token: token, result: "Great Success"}
+      render json: {jwt: token, user: user, result: "Great Success"}
     else
       render json: {result: "Failure"}
     end
@@ -29,7 +33,6 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/users
   def index
     @api_v1_users = Api::V1::User.all
-    puts "Users", current_user.username
     render json: @api_v1_users
   end
 
