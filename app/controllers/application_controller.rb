@@ -8,6 +8,7 @@ end
 
 def auth_header
   # { Authorization: 'Bearer <token>' }
+  p request.headers['Authorization']
   request.headers['Authorization']
 end
 

@@ -6,7 +6,7 @@ class Api::V1::TeamsController < ApplicationController
   def index
     @api_v1_teams = Api::V1::Team.all
 
-    render json: {data:@api_v1_teams}
+    render json: {data: @api_v1_teams}
   end
 
   # GET /api/v1/teams/1

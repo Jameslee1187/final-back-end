@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :favorites
+      post '/favorites', to: 'favorites#create'
     end
   end
   namespace :api do

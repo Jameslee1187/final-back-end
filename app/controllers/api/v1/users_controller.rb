@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_api_v1_user, only: [:show, :update, :destroy]
-  skip_before_action :authorized, only: [:create, :login, :index]
+  before_action :set_api_v1_user, only: [:update, :destroy]
+  skip_before_action :authorized, only: [:show, :create, :login, :index]
 
   def create
     username = params[:username]
@@ -19,6 +19,7 @@ class Api::V1::UsersController < ApplicationController
     username = params[:username]
     password = params[:password]
     user = Api::V1::User.find_by(username: username)
+    puts "user",user
     puts user.authenticate(password)
     puts password
     puts user
@@ -38,6 +39,7 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /api/v1/users/1
   def show
+    @api_v1_user = Api::V1::User.find(params[:id])
     render json: @api_v1_user
   end
 
