@@ -1,5 +1,5 @@
 class Api::V1::FavoritesController < ApplicationController
-  before_action :set_api_v1_favorite, only: [:show, :update, :destroy]
+  before_action :set_api_v1_favorite, only: [:show, :update]
   skip_before_action :authorized, only: [:create, :login]
 
   # GET /api/v1/favorites
@@ -38,7 +38,13 @@ class Api::V1::FavoritesController < ApplicationController
 
   # DELETE /api/v1/favorites/1
   def destroy
+    p "hello"
+    p "id", params[:id]
+    p "team_id",params[:team_id]
+    p "current_user", current_user.id
+    @api_v1_favorite = Api::V1::Favorite.find_by(team_id: params[:team_id], user_id: current_user.id)
     @api_v1_favorite.destroy
+    render json: {result: 'success', data: @api_v1_favorite}
   end
 
   private

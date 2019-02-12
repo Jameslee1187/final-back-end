@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :favorites
+      resources :favorites, except: ["destroy"]
       post '/favorites', to: 'favorites#create'
+      delete '/favorites/:team_id', to: 'favorites#destroy'
     end
   end
   namespace :api do

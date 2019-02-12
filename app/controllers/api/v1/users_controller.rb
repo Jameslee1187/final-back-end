@@ -13,7 +13,6 @@ class Api::V1::UsersController < ApplicationController
         render json: {result: "Failure"}
       end
   end
-  # $2a$10$BDF.9FxvY8uyqexy.bGh7eTD0BHniiVI0WbZIMclZrfBntettu1nu
 
   def login
     username = params[:username]
